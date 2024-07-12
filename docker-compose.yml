@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    container_name: trendtrove-server
+    command: npm run dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  client:
+    build: ./client
+    container_name: trendtrove-client
+    command: npm start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
